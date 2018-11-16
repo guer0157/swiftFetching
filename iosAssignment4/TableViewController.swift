@@ -9,16 +9,38 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-
+    var jsonResponse:[[String:String]]?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    @IBAction func loadInfo(_ sender: Any) {
+        let urlForFetch : URL = URL(string: "https://lenczes.edumedia.ca/mad9137/a4/respond.php")!
+        let infoRequest: URLRequest = URLRequest(url: urlForFetch)
+        let requestSession: URLSession = URLSession.shared
+        
+        let newTask = requestSession.dataTask(with: infoRequest, completionHandler: continueTask)
+        
+        newTask.resume()
+    }
+    func continueTask(serverData: Data?, serverResponse: URLResponse?, serverError: Error?)-> Void{
+        if serverError != nil{
+            self.handleData(responseString: "", error: serverError?.localizedDescription)
+        }else{
+            let passData=String(data: serverData!, encoding: .utf8)!
+            self.handleData(responseString: passData as String, error: nil)
+        }
+    }
+    
+    func handleData(responseString:String, error:String?){
+            var
+    }
+    
 
     // MARK: - Table view data source
 
@@ -32,15 +54,15 @@ class TableViewController: UITableViewController {
         return 0
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+//         Configure the cell...
 
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
