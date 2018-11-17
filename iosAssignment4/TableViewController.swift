@@ -10,6 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
     var jsonResponse:[[String:String]]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +39,26 @@ class TableViewController: UITableViewController {
     }
     
     func handleData(responseString:String, error:String?){
-            var
+//        var outputText:String?
+        
+        if error != nil{
+            print("Error is " + error!)
+        }else{
+            if let jsonObj = responseString.data(using: String.Encoding.utf8){
+                do{
+                    jsonResponse = try JSONSerialization.jsonObject(with: jsonObj, options: []) as? [[String:String]]
+                }catch let handleError{
+                    print(handleError.localizedDescription)
+                }
+            }
+           
+        }
+        
+        DispatchQueue.main.async(){
+//            add code to update tableview here.
+            let
+        }
+        
     }
     
 
